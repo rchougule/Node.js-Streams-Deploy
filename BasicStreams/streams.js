@@ -1,9 +1,9 @@
 const fs = require('fs');
-const file = fs.createWriteStream('./big_file');
 
 
 // function to create a stupid big file. done exceed 1e6. else, face the consequences...
-function createABigFile() {
+function createABigFile(fileName) {
+    const file = fs.createWriteStream(fileName);
     return new Promise((resolve, reject) => {
         for(let i=0; i<1e6; i++)
         {
@@ -11,14 +11,53 @@ function createABigFile() {
         }
 
         file.end();
-        resolve('File Created');
+        resolve();
     })
 }
 
-// createABigFile()
-// .then((result) => {
-//     console.log(result);
-// })
+function checkIfFileExist(fileName) {
+    return new Promise((resolve, reject) => {
+        fs.stat(fileName, (err, stat) => {
+            if(err) {
+                console.log(`## NO FILE FOUND : ${fileName}`);
+                createABigFile(fileName)
+                .then(() => {
+                    console.log(`## FILE CREATED...`);
+                    resolve();
+                })
+                .catch((err) => {
+                    console.log(`## ERROR IN FILE CREATION: ${err}`);
+                    reject(err);
+                })
+            } else {
+                console.log(`## File Already Present`);
+                resolve();
+            }
+        })
+    })
+}
+
+module.exports = {
+    createBigFile: () => {
+        return createABigFile()
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            return err;
+        })
+    },
+
+    fileExistElseCreate: (fileName) => {
+        return checkIfFileExist(fileName)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            return err;
+        })
+    }
+}
 
 
 
