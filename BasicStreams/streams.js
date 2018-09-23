@@ -1,6 +1,5 @@
 const fs = require('fs');
 
-
 // function to create a stupid big file. done exceed 1e6. else, face the consequences...
 function createABigFile(fileName) {
     const file = fs.createWriteStream(fileName);
@@ -15,10 +14,15 @@ function createABigFile(fileName) {
     })
 }
 
+// function to check if file exists or not
 function checkIfFileExist(fileName) {
     return new Promise((resolve, reject) => {
+
+        // checks for the file using fs.stat
         fs.stat(fileName, (err, stat) => {
             if(err) {
+
+                // if file not found by the name, a new file is created
                 console.log(`## NO FILE FOUND : ${fileName}`);
                 createABigFile(fileName)
                 .then(() => {
@@ -37,6 +41,8 @@ function checkIfFileExist(fileName) {
     })
 }
 
+
+// exporting the service via functions
 module.exports = {
     createBigFile: () => {
         return createABigFile()
