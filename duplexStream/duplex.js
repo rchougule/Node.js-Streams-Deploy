@@ -23,4 +23,6 @@ dupStream.currentCharCode = 65;
 
 process.stdin.pipe(dupStream).pipe(process.stdout);
 
-dupStream.push('hello bitches');
+//dupStream.push('testing String');
+//dupStream.push(null);
+//dupStream.push('again bitches')
