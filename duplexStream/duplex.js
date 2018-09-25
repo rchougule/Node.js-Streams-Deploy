@@ -25,4 +25,4 @@ process.stdin.pipe(dupStream).pipe(process.stdout);
 
 //dupStream.push('testing String');
 //dupStream.push(null);
-//dupStream.push('again bitches')
+//dupStream.push('appears if no error')
