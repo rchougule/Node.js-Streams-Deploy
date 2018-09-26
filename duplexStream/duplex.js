@@ -19,9 +19,29 @@ const dupStream = new Duplex({
 
 })
 
-dupStream.currentCharCode = 65;
+const dupStream2 = new Duplex({
+    write(chunk, encoding, callback) {
+        console.log(chunk.toString());
+        callback();
+    },
 
-process.stdin.pipe(dupStream).pipe(process.stdout);
+    read(size) {        
+        //this.push(String.fromCharCode(this.currentChar++));
+        console.log('## read called ##\n');
+        //if(this.currentChar >= 90) 
+        //    this.push(null);
+
+    }
+})
+
+//dupStream.currentCharCode = 65;
+
+//process.stdin.pipe(dupStream).pipe(process.stdout);
+
+//dupStream2.currentChar = 65;
+
+process.stdin.pipe(dupStream2).pipe(process.stdout);
+
 
 //dupStream.push('testing String');
 //dupStream.push(null);

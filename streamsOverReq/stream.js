@@ -29,8 +29,9 @@ app.get('/getFile', (req, res) => {
 
     /**
      * instead, we can use pipe which handles the throttling at the receiver's end as well. pushes the data into the write stream depending on the receiver's capacity
+     * handles error as well
      */
-    
+
     file.pipe(res);
 })
 
